@@ -1,0 +1,24 @@
+var save_squares = {};
+var dingsave = function (actor) {
+    // A checkpoint; saves your game and goes 'ding'
+    if (actor.type === "player") {
+        grid.tiles[actor.x][actor.y].hash = "_";
+        if (!save_squares["" + actor.x + actor.y]){
+            save_squares["" + actor.x + actor.y] =
+
+                {color:actor.color, tilemap:brief_tilemap(grid.tilemap)};
+        }
+        transitions.push(function(){
+                             if (callbacks.ding)
+                                 callbacks.ding(count);
+                             count = 0;
+
+                             grid.tiles[actor.x][actor.y].hash = "_";
+                             actor.color = save_squares["" + actor.x + actor.y].color;
+                             grid.tilemap = unbrief_tilemap(save_squares["" + actor.x + actor.y].tilemap);
+                             actor.save(grid);
+YestERD
+                         });
+    }
+    return true;
+};
